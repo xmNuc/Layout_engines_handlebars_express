@@ -14,18 +14,7 @@ cookieRouter
   })
   .get('/show', (req, res) => {
     const { name } = req.cookies;
-    res.send(`<!DOCTYPE html>
-    <html>
-    <body>
-  <div>
-  <img style="width:150px" src="/se2.png"
-  </div>
-    
-    <h2>${name ?? 'Nothing was saved yet'}</h2>
-    </body>
-    </html>
-    
-    `);
+    res.render('show-cookie', { name, isNumberBigger: 10 > 5 });
   })
   .get('/check', (req, res) => {
     const { name } = req.cookies;
