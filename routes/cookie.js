@@ -6,20 +6,11 @@ cookieRouter
   .post('/set', (req, res) => {
     const { name } = req.body;
 
-    res.cookie('name', name, {
-      maxAge: 1000 * 60 * 60 * 24 * 30,
-    }).send(`<!DOCTYPE html>
-      <html>
-      <body>
-    <div>
-    <img style="width:150px" src="/se2.png"
-    </div>
-      
-      <h2>Information was saved</h2>
-      </body>
-      </html>
-      
-      `);
+    res
+      .cookie('name', name, {
+        maxAge: 1000 * 60 * 60 * 24 * 30,
+      })
+      .render('cookie-set', { name });
   })
   .get('/show', (req, res) => {
     const { name } = req.cookies;
