@@ -1,1 +1,22 @@
-<h1>Home.hbs info</h1>
+<h1>{{test1}},
+  {{info.info1}}
+  {{info.info2}}</h1>
+
+{{#with person}}
+  <h1>Hello,
+    {{name}}
+    {{surname}}
+    , now im using #with
+  </h1>
+
+{{/with}}
+
+{{#each dates}}
+  {{this}}
+{{/each}}
+
+<ul>
+  {{#each dates}}
+    <li>{{this}}</li>
+  {{/each}}
+</ul>

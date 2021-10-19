@@ -18,7 +18,18 @@ app.set('view engine', '.hbs');
 
 app.use('/cookie', cookieRouter);
 app.get('/hi', (req, res) => {
-  res.render('home');
+  res.render('home', {
+    test1: 'Test',
+    info: {
+      info1: 'abc',
+      info2: 'def',
+    },
+    person: {
+      name: 'Son',
+      surname: 'of Storm',
+    },
+    dates: [1990, 1992, 1994, 1994],
+  });
 });
 
 app.listen(3000, 'localhost');
