@@ -1,0 +1,103 @@
+TExt by P1trucha
+
+Po co Handlebarsy?
+-Szybkie
+-Wygodne
+-Bezpieczne
+-Rozszerzalne
+-Łatwo się integrują z Expressem.
+
+Dlaczego używać Handlebarsów?
+-Jest Wydajny - używa asynchronicznie odczytywania plików i cachuje odpowiedzi na produkcji 
+-Jest prosty w użyciu 
+-Domyślnie układa naszą aplikację w dobrej jakości strukturzę
+-Ma wbudowane wiekszość ważnych funkcjonalności Handlebarsów
+
+Jak zainstalowac express-handlebars?
+
+npm i express-handlebars
+
+
+
+W jaki sposób przekazywać dane do Handlebars?
+
+Przekazywanie zmiennej odbywa się za pomocą dwóch nawiasów klamrowych:
+
+{{zmienna}}
+
+Za pomocą trzech nawiasów klamrowych w main.hbs wyświetlamy zawartość home.hbs
+
+Łatwe, skrótowe dostępy do obiektów 
+-Jest czymś w celu destrukturyzacji (Wyciągenie danych z obiektu)
+{{#with person}} 
+ <h1> Your Surname:{{lastname}}</h1>
+ {{/with}}
+
+W przypadku tablic wygląda to następująco:
+
+{{#each date}} 
+<h1>Your Birthdate{{this}}</h1>
+ {{/each}}
+
+Aspekty bardzo ważne jesli chodzi o bezpieczeństwo: 
+1.Nikt Ci nie zrobi domyślnie ataku XSS
+2.NIgdy nie generuj np. dynamicznie JS. Handlebars, bezpiecznie traktuje tylko HTML.
+3.Nigdy nie przekazuj wszystkich danych przesyłanych przez użytkownika
+
+Wstrzykiwanie HTML do Handlebars:
+Można to zrobić za pomocą trzech nawiasów klamrowych(Przestają one ignorować znaczniki Html)
+
+Partiale:
+Jak zautomatyzować np sekcję ocen czy komentarzy?
+Tworzymy partial czyli nowy widok w ścieżce views/partials.
+Następnie dodajemy nazwę pliku w taki sposób:
+{{<nazwapliku}}
+
+Komentarze: 
+Komentarze można zapisać za pomocą:
+{{!--Komentarz--}}
+
+Pętle:
+Możemy tworzyć pętle: 
+{{#each tablica}}
+{{this}}
+{{else}}
+Brak wyników.
+{{/each}}
+
+Warunki:
+{{#if person}}
+<h1> Your surname v2: {{lastname}}</h1>
+{{/if}}
+Odwrotny:
+{{#unless person}}
+<h1>No surname </h1>
+{{/unless}}
+
+Logowanie: 
+{{log 'firstname' firstname 'lastname' lastname}}
+
+
+*/
+const hbs = require('express-handlebars');
+const express = require('express'); //Wyciągamy expressa za pomocą zmiennej w której ustawiamy moduł express.js
+
+
+const app = express();  //Cały moduł express jest jedną wielką funkcją która pobiera wszsystko dosłownie z package json. W skrócie tworzymy web Server
+
+
+
+
+app.engine('.hbs', hbs({extname: '.hbs'}));
+app.set('view engine', '.hbs');  //W skrócie ustawiamy domyślne rozszerzenie jako hbs
+
+app.get('/hello', (req,res) => {
+const firstname = "Anonim";
+res.render('home',{
+  person: {lastname: ' Obiektowy'},
+  date: [2000], 
+});
+});
+
+
+app.listen(3000); //Ustawiamy serwer na loalhost 3000
